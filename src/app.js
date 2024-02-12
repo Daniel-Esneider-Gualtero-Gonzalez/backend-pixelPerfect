@@ -1,5 +1,6 @@
 import express from 'express'
 import multer from 'multer'
+import { apikeysBd } from '../conexionBd.js'
 const app = express()
 
 const upload = multer()
@@ -31,12 +32,33 @@ app.get("/saludo", (req,res)=>{
     res.end("Hola mundo los saludo pixelPerfecto")
 })
 
-app.post("/api/removebg", upload.single("image_file"),async (req,res)=>{
+app.post("/api/createapikey", async(req,res)=>{
+    
+    let response = null
+    const {apikey} = req.body
 
-    console.log("body api remove",req.body)
-    console.log("file ", req.file)
+    try {
+       const newApikey = await new Promise((resolve, reject) => {
+            apikeysBd.insert({apikey:new Date()},(error,apiKeys)=>{
+                if(error){
+                    response = "Error al crear la apikey "
+                    reject("Error al crear la apikey ")
+                }
+                response = "Apikey creada exitosamente"
+                resolve(apiKeys)
+            })
+        })
 
-    res.end("remove success")
+        console.log("Succes ",newApikey)
+
+    } catch (error) {
+        console.log("Error al insertar la apikey", error)
+    }
+
+
+
+    res.end(response)
+   
 })
 
 export default  app 
