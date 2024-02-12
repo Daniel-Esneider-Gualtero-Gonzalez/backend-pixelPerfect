@@ -37,23 +37,27 @@ app.post("/api/createapikey", async(req,res)=>{
     let response = null
     const {apikey} = req.body
 
-    try {
-       const newApikey = await new Promise((resolve, reject) => {
-            apikeysBd.insert({apikey:new Date()},(error,apiKeys)=>{
-                if(error){
-                    response = "Error al crear la apikey "
-                    reject("Error al crear la apikey ")
-                }
-                response = "Apikey creada exitosamente"
-                resolve(apiKeys)
-            })
-        })
+    await new Promise((resolve,reject)=>{
+        setTimeout(()=> resolve() , 10000)
+    })
 
-        console.log("Succes ",newApikey)
+    // try {
+    //    const newApikey = await new Promise((resolve, reject) => {
+    //         apikeysBd.insert({apikey:new Date()},(error,apiKeys)=>{
+    //             if(error){
+    //                 response = "Error al crear la apikey "
+    //                 reject("Error al crear la apikey ")
+    //             }
+    //             response = "Apikey creada exitosamente"
+    //             resolve(apiKeys)
+    //         })
+    //     })
 
-    } catch (error) {
-        console.log("Error al insertar la apikey", error)
-    }
+    //     console.log("Succes ",newApikey)
+
+    // } catch (error) {
+    //     console.log("Error al insertar la apikey", error)
+    // }
 
 
 
