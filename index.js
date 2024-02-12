@@ -1,6 +1,6 @@
 
 import {createServer} from 'http'
-import app from './src/app'
+import app from './src/app.js'
 
 
 
