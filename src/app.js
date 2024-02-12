@@ -1,5 +1,9 @@
 import express from 'express'
+import multer from 'multer'
 const app = express()
+
+const upload = multer()
+
 
 
 app.use(express.json())
@@ -25,6 +29,14 @@ app.get("/",(req,res)=>{
 
 app.get("/saludo", (req,res)=>{
     res.end("Hola mundo los saludo pixelPerfecto")
+})
+
+app.post("/api/removebg", upload.single("image_file"),async (req,res)=>{
+
+    console.log("body api remove",req.body)
+    console.log("file ", req.file)
+
+    res.end("remove success")
 })
 
 export default  app 
